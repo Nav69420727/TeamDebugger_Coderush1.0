@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium AI Medical Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0221; /* Fallback background */
+            overflow: hidden; /* Prevent scrollbars from canvas */
+        }
+
+        #smoke-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .glass-container {
+            background: rgba(10, 5, 30, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            position: relative;
+            z-index: 1;
+        }
+        
+        #chat-log::-webkit-scrollbar { width: 6px; }
+        #chat-log::-webkit-scrollbar-track { background: transparent; }
+        #chat-log::-webkit-scrollbar-thumb { background: rgba(192, 132, 252, 0.5); border-radius: 3px; }
+        #chat-log::-webkit-scrollbar-thumb:hover { background: rgba(192, 132, 252, 0.8); }
+
+        .dot-flashing { position: relative; width: 8px; height: 8px; border-radius: 5px; background-color: #f471b5; color: #f471b5; animation: dot-flashing 1s infinite linear alternate; animation-delay: .5s; }
+        .dot-flashing::before, .dot-flashing::after { content: ''; display: inline-block; position: absolute; top: 0; }
+        .dot-flashing::before { left: -12px; width: 8px; height: 8px; border-radius: 5px; background-color: #f471b5; color: #f471b5; animation: dot-flashing 1s infinite alternate; animation-delay: 0s; }
+        .dot-flashing::after { left: 12px; width: 8px; height: 8px; border-radius: 5px; background-color: #f471b5; color: #f471b5; animation: dot-flashing 1s infinite alternate; animation-delay: 1s; }
+        @keyframes dot-flashing { 0% { background-color: #f471b5; } 50%, 100% { background-color: #f9a8d4; } }
+        
+        .bot-bubble {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.5));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0px 1px 2px 0px rgba(255, 255, 255, 0.05);
+        }
+
+        .bot-message-content h3 { font-weight: 600; margin-bottom: 0.5em; color: #93c5fd; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
+        .bot-message-content ul { list-style-type: none; padding-left: 0; margin-bottom: 1rem; }
+        .bot-message-content li { margin-bottom: 0.25rem; padding-left: 1.25rem; position: relative; }
+        .bot-message-content li::before { content: '•'; color: #93c5fd; font-weight: bold; display: inline-block; width: 1em; margin-left: -1em; position: absolute; left: 0.25rem; }
+        .bot-message-content p { margin-bottom: 0.5rem; }
+        .bot-message-content pre { background-color: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; margin: 1em 0; white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', Courier, monospace; }
+        .bot-message-content strong { color: #d8b4fe; }
+        .bot-message-content .disclaimer { font-size: 0.8rem; color: #fca5a5; border-left: 2px solid #ef4444; padding-left: 0.75rem; margin-top: 1rem; opacity: 0.9; }
+        
+        .copy-code-btn { position: absolute; top: 0.5rem; right: 0.5rem; background-color: rgba(255,255,255,0.1); color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem; transition: background-color 0.2s; }
+        .copy-code-btn:hover { background-color: rgba(255,255,255,0.2); }
+
+        .suggested-prompt { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: background-color 0.2s; }
+        .suggested-prompt:hover { background-color: rgba(255,255,255,0.1); }
+        
+        .send-btn-active { transform: scale(0.9); }
+
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen text-slate-200 p-4">
+    
+    <canvas id="smoke-background"></canvas>
+
+    <div class="w-full max-w-2xl h-full md:h-[90vh] flex flex-col glass-container shadow-2xl rounded-2xl">
+        <!-- Header -->
+        <div class="p-4 border-b border-white/10 flex items-center justify-between shadow-md flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <i class="fa-solid fa-staff-snake text-2xl text-cyan-400"></i>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-50">Aura AI Medical Assistant</h1>
+                    <p class="text-sm text-cyan-400 flex items-center gap-2">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span></span>
+                        Online
+                    </p>
+                </div>
+            </div>
+            <button id="clear-chat-btn" class="text-xs text-slate-400 hover:text-white transition"><i class="fas fa-trash-alt mr-1"></i> Clear Chat</button>
+        </div>
+
+        <!-- Chat Log -->
+        <div id="chat-log" class="flex-1 p-6 overflow-y-auto space-y-6">
+            <!-- Initial Bot Message will be injected here by JS -->
+        </div>
+        
+        <!-- Suggested Prompts -->
+        <div id="suggested-prompts" class="p-6 pt-0 border-t border-white/10">
+            <p class="text-xs text-slate-400 mb-2 text-center">Try asking about a medicine...</p>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <button class="suggested-prompt p-2 rounded-lg text-center">"Tell me about Aspirin"</button>
+                <button class="suggested-prompt p-2 rounded-lg text-center">"What are the side effects of Metformin?"</button>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" class="hidden p-6 pt-0">
+            <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-black/20 flex items-center justify-center border border-white/10"><i class="fa-solid fa-staff-snake text-cyan-400"></i></div>
+                <div class="bg-black/20 p-4 rounded-lg flex items-center justify-center h-12 border border-white/10"><div class="dot-flashing"></div></div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-black/10 border-t border-white/10 flex-shrink-0">
+            <div class="flex items-center space-x-3">
+                <input type="text" id="user-input" placeholder="Enter a medicine name or ask a question..." class="flex-1 p-3 bg-black/20 border border-white/10 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-500 transition text-slate-200 placeholder-slate-400">
+                <button id="send-btn" class="bg-gradient-to-br from-cyan-600 to-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center hover:from-cyan-700 hover:to-blue-700 transition-transform shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-cyan-500">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- Chatbot Logic ---
+    const chatLog = document.getElementById('chat-log');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const clearChatBtn = document.getElementById('clear-chat-btn');
+    const suggestedPromptsContainer = document.getElementById('suggested-prompts');
+    
+    const API_KEY = "AIzaSyBX-twvEvNiJD-_o8BMjZC9AqJcGN94sEs"; 
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+
+    const initialBotMessage = "Hello! I am a medical AI assistant. You can ask me for information about specific medicines. Please note, I am not a doctor. Always consult a healthcare professional for medical advice.";
+
+    function displayInitialBotMessage() {
+        chatLog.innerHTML = '';
+        displayMessage(markdownToHtml(initialBotMessage), 'bot');
+        suggestedPromptsContainer.style.display = 'block';
+    }
+
+    sendBtn.addEventListener('click', () => {
+        sendMessage();
+        sendBtn.classList.add('send-btn-active');
+        setTimeout(() => sendBtn.classList.remove('send-btn-active'), 100);
+    });
+    userInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') sendMessage(); });
+    clearChatBtn.addEventListener('click', displayInitialBotMessage);
+
+    suggestedPromptsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('suggested-prompt')) {
+            userInput.value = e.target.textContent.replace(/"/g, '');
+            sendMessage();
+        }
+    });
+
+    function markdownToHtml(text) {
+        // Disclaimer
+        text = text.replace(/Disclaimer: (.*)/g, '<p class="disclaimer"><strong>Disclaimer:</strong> $1</p>');
+        
+        // Headings with Icons
+        text = text.replace(/\*\*(.*?)\*\*/g, (match, content) => {
+            let icon = '';
+            if (content.includes('Primary Use')) icon = '<i class="fas fa-pills fa-fw"></i>';
+            if (content.includes('Helpful For')) icon = '<i class="fas fa-lightbulb fa-fw"></i>';
+            if (content.includes('Age Group')) icon = '<i class="fas fa-users fa-fw"></i>';
+            if (content.includes('Consumption & Timing')) icon = '<i class="fas fa-clock fa-fw"></i>';
+            if (content.includes('Precautions')) icon = '<i class="fas fa-exclamation-triangle fa-fw"></i>';
+            if (content.includes('Side Effects')) icon = '<i class="fas fa-heartbeat fa-fw"></i>';
+            if (content.includes('Alternatives')) icon = '<i class="fas fa-exchange-alt fa-fw"></i>';
+            return `<h3>${icon} ${content.replace(/\*/g, '')}</h3>`;
+        });
+        
+        // Lists
+        text = text.replace(/^\s*\*[ \t]+(.*)/gm, '<ul><li>$1</li></ul>');
+        text = text.replace(/<\/ul>\n<ul>/g, '');
+        
+        // Paragraphs
+        text = text.split('\n').filter(p => !p.trim().startsWith('###')).map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+        text = text.replace(/<p><(ul|ol)>/g, '<$1>').replace(/<\/(ul|ol)><\/p>/g, '</$1>');
+        
+        return text;
+    }
+
+    async function sendMessage() {
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return;
+        
+        suggestedPromptsContainer.style.display = 'none';
+        displayMessage(userMessage, 'user');
+        userInput.value = '';
+        showLoading(true);
+
+        try {
+            const botResponse = await getBotResponse(userMessage);
+            const formattedResponse = markdownToHtml(botResponse);
+            displayMessage(formattedResponse, 'bot');
+        } catch (error) {
+            console.error("Error getting bot response:", error);
+            displayMessage("<p>Sorry, I encountered an error. Please check your API key and network connection.</p>", 'bot');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    async function getBotResponse(userMessage) {
+        const analysisPrompt = `Is the following user query a request for information about a specific medicine? Respond with ONLY a JSON object: {"is_medicine_query": boolean, "medicine_name": "string or null"}. User Query: "${userMessage}"`;
+        const analysisResult = await callGemini(analysisPrompt);
+        let decision;
+        try {
+            const cleanedResult = analysisResult.replace(/```json/g, '').replace(/```/g, '').trim();
+            decision = JSON.parse(cleanedResult);
+        } catch (e) {
+            decision = { is_medicine_query: false, medicine_name: null };
+        }
+
+        if (decision.is_medicine_query && decision.medicine_name) {
+             const finalPrompt = `
+                Act as a helpful medical information assistant. For the medicine "${decision.medicine_name}", provide a structured response using the following headings exactly as written, each on a new line:
+                **Primary Use**
+                **Helpful For**
+                **Age Group**
+                **Consumption & Timing**
+                **Precautions**
+                **Common Side Effects**
+                **Potential Alternatives**
+
+                For each heading, provide a concise, bulleted list of information.
+
+                IMPORTANT: Conclude your response with the following mandatory disclaimer on a new line:
+                Disclaimer: This information is for educational purposes only and is not a substitute for professional medical advice. Always consult a doctor or pharmacist for personalized guidance.
+            `;
+            return await callGemini(finalPrompt);
+        } else {
+            const directPrompt = `You are a helpful AI assistant. Answer the following question. Format your response in simple Markdown. Question: ${userMessage}`;
+            return await callGemini(directPrompt);
+        }
+    }
+
+    async function callGemini(prompt) {
+        const payload = { contents: [{ parts: [{ text: prompt }] }] };
+        let attempts = 0;
+        const maxAttempts = 5;
+        
+        while (attempts < maxAttempts) {
+            try {
+                const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (!res.ok) throw new Error(`API call failed: ${res.status}`);
+                const response = await res.json();
+                if (response.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    return response.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Invalid response structure.");
+                }
+            } catch (error) {
+                attempts++;
+                if (attempts >= maxAttempts) { console.error("API call failed after retries:", error); return "I'm having trouble connecting right now. Please try again later."; }
+                const delay = Math.pow(2, attempts) * 100;
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+    }
+
+    chatLog.addEventListener('click', function(event) {
+        if (event.target.classList.contains('copy-code-btn')) {
+            const pre = event.target.previousElementSibling;
+            const code = pre.querySelector('code');
+            navigator.clipboard.writeText(code.innerText).then(() => {
+                event.target.textContent = 'Copied!';
+                setTimeout(() => { event.target.textContent = 'Copy'; }, 2000);
+            });
+        }
+    });
+
+    function displayMessage(message, sender) {
+        const messageWrapper = document.createElement('div');
+        if (sender === 'user') {
+            messageWrapper.innerHTML = `<div class="flex items-start gap-3 justify-end"><div class="bg-gradient-to-br from-cyan-600 to-blue-600 text-white p-4 rounded-lg max-w-xs md:max-w-md"><p class="text-sm">${message}</p></div><div class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center border border-white/10"><i class="fas fa-user text-white"></i></div></div>`;
+        } else {
+            messageWrapper.innerHTML = `<div class="flex items-start gap-3"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-black/20 flex items-center justify-center border border-white/10"><i class="fa-solid fa-staff-snake text-cyan-400"></i></div><div class="bot-bubble p-4 rounded-lg max-w-md"><div class="text-sm text-slate-300 bot-message-content">${message}</div></div></div>`;
+        }
+        chatLog.appendChild(messageWrapper);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function showLoading(isLoading) {
+        loadingIndicator.style.display = isLoading ? 'block' : 'none';
+        if (isLoading) chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    // --- Smoke Background Effect ---
+    const canvas = document.getElementById('smoke-background');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const smokeColors = ['#5a189a', '#7b2cbf', '#9d4edd', '#219ebc', '#8ecae6', '#f471b5', '#c77dff'];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 250 + 150;
+            this.speedX = (Math.random() * 2 - 1) * 1.2;
+            this.speedY = (Math.random() * 2 - 1) * 1.2;
+            this.color = smokeColors[Math.floor(Math.random() * smokeColors.length)];
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width + this.size) this.x = -this.size;
+            if (this.x < -this.size) this.x = canvas.width + this.size;
+            if (this.y > canvas.height + this.size) this.y = -this.size;
+            if (this.y < -this.size) this.y = canvas.height + this.size;
+        }
+        draw() {
+            ctx.beginPath();
+            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+            gradient.addColorStop(0, this.color + '25');
+            gradient.addColorStop(1, this.color + '00');
+            ctx.fillStyle = gradient;
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const numberOfParticles = 40;
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateSmoke() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+        requestAnimationFrame(animateSmoke);
+    }
+    
+    // --- Initial Load ---
+    displayInitialBotMessage();
+    initParticles();
+    animateSmoke();
+
+</script>
+</body>
+</html>
