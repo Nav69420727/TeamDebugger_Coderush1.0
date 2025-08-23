@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Blood Analysis Report Upload</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            overflow-x: hidden;
+        }
+        #animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #daece4, #c1d9d7, #a9c7c0, #5fb8b1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        :root {
+            --main-color: #5fb8b1;
+            --secondary-color: #daece4;
+            --text-color: #47886f;
+            --dark-text: #2d5a4a;
+        }
+        .text-main { color: var(--main-color); }
+        .text-custom { color: var(--text-color); }
+        .bg-main { background-color: var(--main-color); }
+        .hover\:bg-main-dark:hover { background-color: #4a9a92; }
+        .loader {
+            border: 4px solid rgba(0,0,0,0.1);
+            border-top: 4px solid var(--main-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: var(--main-color);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(95, 184, 177, 0.39);
+        }
+    </style>
+</head>
+<body class="text-custom">
+    <div id="animated-bg"></div>
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <svg class="h-9 w-9 text-main" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <h1 class="text-2xl font-bold" style="color: var(--dark-text);">Vitalytics AI</h1>
+            </div>
+            <div>
+                <a href="#upload-section" class="bg-main text-white font-semibold px-6 py-2.5 rounded-lg shadow-md hover:bg-main-dark transition-all duration-300 transform hover:scale-105">
+                    Upload Report
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero-section" class="relative py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 id="hero-title" class="text-5xl md:text-6xl font-bold mb-5 leading-tight" style="color: var(--dark-text);">AI-Powered Diagnosis of Your Blood Report</h2>
+                <p id="hero-subtitle" class="text-lg md:text-xl max-w-3xl mx-auto mb-10" style="color: #3a7a63;">
+                    Upload a photo or PDF of your report to receive a detailed AI-generated diagnosis and actionable health insights.
+                </p>
+                <a id="hero-button" href="#upload-section" class="bg-main text-white font-bold py-4 px-10 rounded-full shadow-xl hover:bg-main-dark transform hover:scale-105 transition-all duration-300 text-lg">
+                    Get Started Now
+                </a>
+            </div>
+        </section>
+
+        <!-- Upload & Results Section -->
+        <section id="upload-section" class="py-20 min-h-screen">
+            <div class="container mx-auto px-6 text-center">
+                 <div id="upload-box">
+                    <h3 class="text-4xl font-bold mb-4" style="color: var(--dark-text);">Ready to Upload?</h3>
+                    <p class="max-w-2xl mx-auto mb-8 text-lg" style="color: #3a7a63;">
+                        Select your file below. Your privacy is our priority; all uploads are encrypted and processed securely.
+                    </p>
+                    <div id="upload-container" class="max-w-2xl mx-auto bg-white/60 backdrop-blur-md border-2 border-dashed border-gray-300 rounded-xl p-10 hover:border-main transition-colors duration-300 cursor-pointer">
+                        <input type="file" id="file-upload" class="hidden" accept="image/png, image/jpeg, application/pdf">
+                        <label for="file-upload" class="cursor-pointer flex flex-col items-center">
+                            <svg class="h-16 w-16 text-gray-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                            <p id="upload-text" class="text-lg text-gray-700"><span class="font-semibold text-main">Click to upload</span> or drag and drop</p>
+                            <p class="text-md text-gray-500 mt-1">PNG, JPG, or PDF (MAX. 10MB)</p>
+                        </label>
+                    </div>
+                 </div>
+                 
+                 <!-- Results Display Area -->
+                 <div id="results-container" class="hidden mt-12 max-w-6xl mx-auto text-left">
+                    <div id="loading-indicator" class="flex flex-col items-center justify-center py-16">
+                        <div class="loader"></div>
+                        <p class="mt-6 text-xl" style="color: var(--dark-text);">Analyzing your report... This may take a moment.</p>
+                    </div>
+                    
+                    <div id="error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert">
+                        <strong class="font-bold">Error:</strong>
+                        <span class="block sm:inline">Could not analyze the report. Please try again with a clearer image or valid PDF.</span>
+                    </div>
+
+                    <div id="analysis-results" class="hidden">
+                        <!-- Part 1: Diagnostic Report -->
+                        <div class="mb-12">
+                            <h3 class="text-4xl font-bold text-center mb-8" style="color: var(--dark-text);">Your AI-Generated Diagnostic Report</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 diagnostic-grid">
+                                <div class="result-card bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Blood Group</h4><p id="blood-group" class="text-3xl font-bold text-gray-800">-</p></div>
+                                <div class="result-card bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Sugar Level</h4><p id="sugar-level" class="text-3xl font-bold text-gray-800">-</p></div>
+                                <div class="result-card bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Hemoglobin</h4><p id="hemoglobin" class="text-3xl font-bold text-gray-800">-</p></div>
+                                <div class="result-card bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">White Blood Cells</h4><p id="wbc" class="text-3xl font-bold text-gray-800">-</p></div>
+                                <div class="result-card bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Red Blood Cells</h4><p id="rbc" class="text-3xl font-bold text-gray-800">-</p></div>
+                                <div class="result-card bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Platelets</h4><p id="platelets" class="text-3xl font-bold text-gray-800">-</p></div>
+                            </div>
+                            <div class="result-card mt-6 bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Infection Status</h4><p id="infection" class="text-2xl font-bold text-gray-800">-</p></div>
+                            <div class="result-card mt-6 bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50"><h4 class="text-xl font-semibold text-main mb-3">Vitamin & Mineral Deficiencies</h4><ul id="deficiencies" class="text-gray-800 list-disc list-inside space-y-1 text-lg"><li>-</li></ul></div>
+                        </div>
+
+                        <!-- Part 2: AI Health Recommendations -->
+                        <div class="recommendations-section">
+                            <h3 class="text-4xl font-bold text-center mb-8" style="color: var(--dark-text);">AI Health Recommendations</h3>
+                            <div class="bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-white/50">
+                                <div class="flex justify-center border-b border-gray-200 mb-4">
+                                    <button class="tab-button active py-2 px-6 font-semibold" onclick="openTab(event, 'dos')">What to Do</button>
+                                    <button class="tab-button py-2 px-6 font-semibold" onclick="openTab(event, 'donts')">What to Avoid</button>
+                                    <button class="tab-button py-2 px-6 font-semibold" onclick="openTab(event, 'vitamins')">Vitamins</button>
+                                    <button class="tab-button py-2 px-6 font-semibold" onclick="openTab(event, 'foods')">Foods</button>
+                                </div>
+                                <div id="dos" class="tab-content"><ul id="dos-list" class="space-y-2 text-lg text-gray-800 list-disc list-inside p-4"></ul></div>
+                                <div id="donts" class="tab-content hidden"><ul id="donts-list" class="space-y-2 text-lg text-gray-800 list-disc list-inside p-4"></ul></div>
+                                <div id="vitamins" class="tab-content hidden"><ul id="vitamins-list" class="space-y-2 text-lg text-gray-800 list-disc list-inside p-4"></ul></div>
+                                <div id="foods" class="tab-content hidden"><ul id="foods-list" class="space-y-2 text-lg text-gray-800 list-disc list-inside p-4"></ul></div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // WARNING: Storing API keys in client-side code is insecure.
+        const apiKey = "AIzaSyD1sg3Pz5CzGkIyWegHwaiAHc5TN4wt3gw";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        // DOM Elements
+        const fileUpload = document.getElementById('file-upload');
+        const uploadBox = document.getElementById('upload-box');
+        const resultsContainer = document.getElementById('results-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const analysisResults = document.getElementById('analysis-results');
+        const errorMessage = document.getElementById('error-message');
+
+        fileUpload.addEventListener('change', handleFileSelect);
+        document.getElementById('upload-container').addEventListener('click', () => fileUpload.click());
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
+                alert('Please select an image file (PNG, JPG) or a PDF.');
+                return;
+            }
+
+            gsap.to("#upload-box", { opacity: 0, y: -50, duration: 0.5, onComplete: () => {
+                uploadBox.classList.add('hidden');
+                resultsContainer.classList.remove('hidden');
+                loadingIndicator.style.display = 'flex';
+                analysisResults.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+                gsap.from("#results-container", { opacity: 0, y: 50, duration: 0.5 });
+            }});
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64Data = reader.result.split(',')[1];
+                callGeminiAPI(base64Data, file.type);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function callGeminiAPI(base64Data, mimeType) {
+            const prompt = `
+                Analyze the attached blood analysis report. Extract key diagnostic points and provide health recommendations.
+                Return the response as a single, valid JSON object with this exact structure:
+                {
+                  "blood_group": "e.g., O+",
+                  "infection_status": "e.g., Normal or Detected",
+                  "sugar_level": "e.g., 95 mg/dL",
+                  "hemoglobin": "e.g., 14.5 g/dL",
+                  "wbc_count": "e.g., 7,500 /mcL",
+                  "rbc_count": "e.g., 5.2 million cells/mcL",
+                  "platelet_count": "e.g., 250,000 /mcL",
+                  "deficiencies": ["List any vitamin or mineral deficiencies found, e.g., 'Vitamin D', 'Iron'"],
+                  "recommendations": {
+                    "dos": ["An array of strings for things the person should do. Be specific and actionable."],
+                    "donts": ["An array of strings for things the person should avoid. Be specific."],
+                    "vitamins": ["An array of strings listing recommended vitamins or supplements."],
+                    "foods": ["An array of strings listing recommended foods to add to the diet."]
+                  }
+                }
+                If a value is not present, use "Not Found". Provide at least 3-5 points for each recommendation category.
+            `;
+
+            const payload = {
+                contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType, data: base64Data } }] }],
+                generationConfig: { responseMimeType: "application/json" }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                
+                const result = await response.json();
+                const content = result.candidates[0].content.parts[0].text;
+                const parsedData = JSON.parse(content);
+                displayResults(parsedData);
+            } catch (error) {
+                console.error("API Call Failed:", error);
+                displayError();
+            }
+        }
+
+        function displayResults(data) {
+            // Populate Diagnostic Report
+            document.getElementById('blood-group').textContent = data.blood_group || '-';
+            document.getElementById('sugar-level').textContent = data.sugar_level || '-';
+            document.getElementById('hemoglobin').textContent = data.hemoglobin || '-';
+            document.getElementById('wbc').textContent = data.wbc_count || '-';
+            document.getElementById('rbc').textContent = data.rbc_count || '-';
+            document.getElementById('platelets').textContent = data.platelet_count || '-';
+            document.getElementById('infection').textContent = data.infection_status || '-';
+            
+            const deficienciesList = document.getElementById('deficiencies');
+            deficienciesList.innerHTML = '';
+            if (data.deficiencies && data.deficiencies.length > 0) {
+                data.deficiencies.forEach(item => deficienciesList.innerHTML += `<li>${item}</li>`);
+            } else {
+                deficienciesList.innerHTML = '<li>No significant deficiencies detected.</li>';
+            }
+
+            // Populate Recommendations
+            const { dos, donts, vitamins, foods } = data.recommendations;
+            document.getElementById('dos-list').innerHTML = dos.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('donts-list').innerHTML = donts.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('vitamins-list').innerHTML = vitamins.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('foods-list').innerHTML = foods.map(i => `<li>${i}</li>`).join('');
+            
+            loadingIndicator.style.display = 'none';
+            analysisResults.classList.remove('hidden');
+
+            // Animate results into view
+            gsap.from(".result-card", {
+                duration: 0.8,
+                opacity: 0,
+                y: 30,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+            gsap.from(".recommendations-section", {
+                duration: 1,
+                opacity: 0,
+                y: 50,
+                ease: "power2.out",
+                delay: 0.5
+            });
+        }
+        
+        function displayError() {
+            loadingIndicator.style.display = 'none';
+            errorMessage.classList.remove('hidden');
+        }
+
+        function openTab(event, tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from("#hero-title", { duration: 1, y: 50, opacity: 0, ease: "power3.out", delay: 0.2 });
+        gsap.from("#hero-subtitle", { duration: 1, y: 50, opacity: 0, ease: "power3.out", delay: 0.4 });
+        gsap.from("#hero-button", { duration: 1, y: 50, opacity: 0, ease: "power3.out", delay: 0.6 });
+
+        gsap.from("#upload-box", {
+            scrollTrigger: {
+                trigger: "#upload-box",
+                start: "top 80%",
+            },
+            duration: 1,
+            y: 100,
+            opacity: 0,
+            ease: "power3.out"
+        });
+    </script>
+</body>
+</html>
