@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare - Your Health, Our Priority</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'main': '#5fb8b1',
+                        'secondary': '#daece4',
+                        'text-main': '#47886f',
+                        'text-dark': '#2d5749',
+                        'light-blue': '#f0f7ff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .slider-track {
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-white font-sans">
+
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-main rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                </div>
+                <span class="text-2xl font-bold font-poppins text-text-dark">HEALTHCARE</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8 font-semibold">
+                <a href="#home" class="text-text-main hover:text-main transition-colors duration-300">Home</a>
+                <a href="#about" class="text-text-main hover:text-main transition-colors duration-300">About Us</a>
+                <a href="#doctors" class="text-text-main hover:text-main transition-colors duration-300">Doctors</a>
+                <a href="#services" class="text-text-main hover:text-main transition-colors duration-300">Services</a>
+                <a href="eeg.html" class="text-text-main hover:text-main transition-colors duration-300">EEG Diagnostics</a>
+                <a href="#appointment" class="js-open-modal bg-main text-white font-bold py-2 px-6 rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-lg">
+                    Appointment
+                </a>
+            </div>
+
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-text-dark focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+            <a href="#home" class="block text-text-main hover:text-main transition-colors duration-300">Home</a>
+            <a href="#about" class="block text-text-main hover:text-main transition-colors duration-300">About Us</a>
+            <a href="#doctors" class="block text-text-main hover:text-main transition-colors duration-300">Doctors</a>
+            <a href="#services" class="block text-text-main hover:text-main transition-colors duration-300">Services</a>
+            <a href="eeg.html" class="block text-text-main hover:text-main transition-colors duration-300">EEG Diagnostics</a>
+            <a href="#appointment" class="js-open-modal block bg-main text-white text-center font-bold py-2 px-6 rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-lg mt-4">Appointment</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="relative bg-light-blue pt-12 pb-20 md:py-24">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left z-10">
+                    <h1 class="text-4xl md:text-6xl font-extrabold font-poppins text-text-dark leading-tight mb-4">Complete Healthcare Ecosystem</h1>
+                    <p class="text-lg text-text-main mb-8"><I>Welcome to HEALTHCARE, where modern healthcare revolves entirely around you</I></p>
+                    <a href="#appointment" class="js-open-modal bg-main text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-xl text-lg">
+                        Book an Appointment
+                    </a>
+                </div>
+                <div class="relative flex justify-center items-center">
+                    <div class="absolute w-full h-full bg-secondary rounded-full transform scale-110 opacity-50"></div>
+                    <img src="https://placehold.co/500x500/daece4/47886f?text=Your+Health+Partner" alt="A smiling doctor" class="relative z-10 rounded-full shadow-2xl object-cover w-4/5">
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="bg-gray-50 py-20">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <img src="https://placehold.co/600x400/5fb8b1/FFFFFF?text=Our+Facility" alt="Hospital Facility" class="rounded-2xl shadow-xl w-full">
+                </div>
+                <div>
+                    <span class="text-main font-semibold">ABOUT US</span>
+                    <h2 class="text-3xl font-bold font-poppins text-text-dark mb-4 mt-2">Your Trusted Health Partner</h2>
+                    <p class="text-text-main mb-6">Our hospital is the result of collective and concerted efforts by experts in comprehensive healthcare. We are the first multi-specialty hospital in the region, ensuring you don't have to run from pillar to post for your health needs. We have all facilities under one roof.</p>
+                    <div class="grid grid-cols-2 gap-6 text-text-dark">
+                        <div class="flex items-center space-x-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-main" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span class="font-semibold">24x7 Emergency Care</span></div>
+                        <div class="flex items-center space-x-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-main" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.124-1.28-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.124-1.28.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span class="font-semibold">Qualified Doctors</span></div>
+                        <div class="flex items-center space-x-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-main" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span class="font-semibold">Advanced Technology</span></div>
+                        <div class="flex items-center space-x-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-main" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg><span class="font-semibold">Modern ICU</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="doctors" class="bg-white py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-extrabold font-poppins text-text-dark mb-4 tracking-tight">Meet Our Expert Physicians</h2>
+                    <p class="text-lg text-text-main max-w-3xl mx-auto">Our distinguished panel of physicians is committed to providing exceptional healthcare in a comfortable and luxurious setting.</p>
+                </div>
+                
+                <div class="relative max-w-5xl mx-auto">
+                    <div class="overflow-hidden relative">
+                        <div id="slider-track" class="flex slider-track">
+
+                            <<div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
+    <div class="group h-full">
+        <div class="bg-white rounded-2xl shadow-xl p-6 text-center h-full transform group-hover:-translate-y-2 transition-transform duration-300 border border-gray-200/80">
+            <img src="https://placehold.co/200x200/daece4/47886f?text=Dr.+Sneha+Desai" alt="Dr. Sneha Desai" class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-secondary group-hover:border-main transition-all duration-300 object-cover">
+            <h3 class="text-xl font-bold font-poppins text-text-dark">Dr. Sneha Desai</h3>
+            <p class="text-main font-semibold mb-3">Dermatologist</p>
+            <p class="text-gray-600 text-sm mb-5">Expert in cosmetic dermatology and treating chronic skin conditions like eczema and psoriasis.</p>
+            <a href="#" target="_blank" class="inline-flex items-center gap-2 bg-secondary text-main text-sm font-bold py-2 px-5 rounded-full group-hover:bg-main group-hover:text-white transition-colors duration-300">
+                View Profile <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
+    <div class="group h-full">
+        <div class="bg-white rounded-2xl shadow-xl p-6 text-center h-full transform group-hover:-translate-y-2 transition-transform duration-300 border border-gray-200/80">
+            <img src="https://placehold.co/200x200/daece4/47886f?text=Dr.+Priya+Sharma" alt="Dr. Priya Sharma" class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-secondary group-hover:border-main transition-all duration-300 object-cover">
+            <h3 class="text-xl font-bold font-poppins text-text-dark">Dr. Priya Sharma</h3>
+            <p class="text-main font-semibold mb-3">Cardiologist</p>
+            <p class="text-gray-600 text-sm mb-5">Specializing in interventional cardiology and heart failure management with over 12 years of experience.</p>
+            <a href="#" target="_blank" class="inline-flex items-center gap-2 bg-secondary text-main text-sm font-bold py-2 px-5 rounded-full group-hover:bg-main group-hover:text-white transition-colors duration-300">
+                View Profile <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </a>
+        </div>
+    </div>
+</div>
+                            
+                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
+    <div class="group h-full">
+        <div class="bg-white rounded-2xl shadow-xl p-6 text-center h-full transform group-hover:-translate-y-2 transition-transform duration-300 border border-gray-200/80">
+            <img src="https://placehold.co/200x200/daece4/47886f?text=Dr.+Arjun+Mehta" alt="Dr. Arjun Mehta" class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-secondary group-hover:border-main transition-all duration-300 object-cover">
+            <h3 class="text-xl font-bold font-poppins text-text-dark">Dr. Arjun Mehta</h3>
+            <p class="text-main font-semibold mb-3">Pediatrician</p>
+            <p class="text-gray-600 text-sm mb-5">A compassionate pediatrician dedicated to children's health from infancy through adolescence.</p>
+            <a href="#" target="_blank" class="inline-flex items-center gap-2 bg-secondary text-main text-sm font-bold py-2 px-5 rounded-full group-hover:bg-main group-hover:text-white transition-colors duration-300">
+                View Profile <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </a>
+        </div>
+    </div>
+</div>
+                            <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-4">
+                                <div class="group h-full">
+                                    <div class="bg-white rounded-2xl shadow-xl p-6 text-center h-full transform group-hover:-translate-y-2 transition-transform duration-300 border border-gray-200/80">
+                                        <img src="https://placehold.co/200x200/daece4/47886f?text=Dr.+S.+Bhole" alt="Dr. Sadashiv Bhole" class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-secondary group-hover:border-main transition-all duration-300">
+                                        <h3 class="text-xl font-bold font-poppins text-text-dark">Dr. Sadashiv Bhole</h3>
+                                        <p class="text-main font-semibold mb-3">Sr. Urologist & Robotic Surgeon</p>
+                                        <p class="text-gray-600 text-sm mb-5">15+ years of experience in treating complex urological & andrological conditions.</p>
+                                        <a href="https://sevenstarhospitals.com/consultants-team" target="_blank" class="inline-flex items-center gap-2 bg-secondary text-main text-sm font-bold py-2 px-5 rounded-full group-hover:bg-main group-hover:text-white transition-colors duration-300">
+                                            View Profile <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="prev-btn" class="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-6 bg-white p-3 rounded-full shadow-lg text-main hover:bg-main hover:text-white transition-all duration-300 z-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button id="next-btn" class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-6 bg-white p-3 rounded-full shadow-lg text-main hover:bg-main hover:text-white transition-all duration-300 z-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section id="services" class="bg-gray-50 py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-extrabold text-text-dark">Comprehensive Healthcare Services</h2>
+                    <p class="mt-4 text-lg text-text-main max-w-3xl mx-auto">From instant consultations to mental wellness, we've got you covered with a wide range of accessible healthcare solutions.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+                    <a href="chatbot.html" class="group text-center p-6 bg-white rounded-2xl shadow-md hover:bg-main hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center"><div class="bg-secondary group-hover:bg-white/30 p-4 rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-main group-hover:text-white transition-colors duration-300" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm1.5 0a.5.5 0 00-.5.5v6a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-6a.5.5 0 00-.5-.5h-11z" /> <path d="M3 3.5a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1a.5.5 0 01-.5-.5z" /></svg></div><h3 class="text-xl font-bold text-text-dark group-hover:text-white mt-4 mb-2">AI Chatbot</h3><p class="text-text-main group-hover:text-white/90">24/7 AI-powered health assistance.</p></a>
+                    <a href="remedy.html" class="group text-center p-6 bg-white rounded-2xl shadow-md hover:bg-main hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center"><div class="bg-secondary group-hover:bg-white/30 p-4 rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-main group-hover:text-white transition-colors duration-300" viewBox="0 0 20 20" fill="currentColor"><path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V5.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 00-1.447-.894l-4 2A1 1 0 009 8.236V17a1 1 0 001.447.894l4-2A1 1 0 0015 15V6.236a.998.998 0 00.211-.96zM4.553 8.894a1 1 0 00.553-.894V3a1 1 0 00-2 0v5a1 1 0 00.553.894l2 1A1 1 0 007 10.764V17a1 1 0 002 0v-5.236a1 1 0 00-1.447-.894l-3-1.5z" /></svg></div><h3 class="text-xl font-bold text-text-dark group-hover:text-white mt-4 mb-2">Home Remedies</h3><p class="text-text-main group-hover:text-white/90">Safe & effective natural solutions.</p></a>
+                    <a href="#doctors" class="group text-center p-6 bg-white rounded-2xl shadow-md hover:bg-main hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center"><div class="bg-secondary group-hover:bg-white/30 p-4 rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-main group-hover:text-white transition-colors duration-300" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg></div><h3 class="text-xl font-bold text-text-dark group-hover:text-white mt-4 mb-2">Consult a Doctor</h3><p class="text-text-main group-hover:text-white/90">Connect with our specialists.</p></a>
+                    <a href="Map.html" class="group text-center p-6 bg-white rounded-2xl shadow-md hover:bg-main hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center"><div class="bg-secondary group-hover:bg-white/30 p-4 rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-main group-hover:text-white transition-colors duration-300" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg></div><h3 class="text-xl font-bold text-text-dark group-hover:text-white mt-4 mb-2">Near Medical Shop</h3><p class="text-text-main group-hover:text-white/90">Find pharmacies in your vicinity.</p></a>
+                    <a href="mentaldisorder.html" class="group text-center p-6 bg-white rounded-2xl shadow-md hover:bg-main hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center"><div class="bg-secondary group-hover:bg-white/30 p-4 rounded-full transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-main group-hover:text-white transition-colors duration-300" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3.5a.75.75 0 01.75.75v2.5a.75.75 0 01-1.5 0V4.25A.75.75 0 0110 3.5zM10 8.5a.5.5 0 01.5.5v5a.5.5 0 01-1 0v-5a.5.5 0 01.5-.5zM8.5 6a.5.5 0 00-.5.5v2.5a.5.5 0 001 0V6.5a.5.5 0 00-.5-.5zM11.5 6a.5.5 0 00-.5.5v2.5a.5.5 0 001 0V6.5a.5.5 0 00-.5-.5z" /> <path fill-rule="evenodd" d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13z" clip-rule="evenodd" /></svg></div><h3 class="text-xl font-bold text-text-dark group-hover:text-white mt-4 mb-2">Mental Health</h3><p class="text-text-main group-hover:text-white/90">Support for emotional well-being.</p></a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="eeg-detection" class="bg-white py-20">
+            <div class="container mx-auto px-6">
+                 <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="order-2 md:order-1">
+                        <span class="text-main font-semibold tracking-wider">INNOVATIVE DIAGNOSTICS</span>
+                        <a href="diseaseai.html">
+                            <h2 class="text-4xl font-extrabold font-poppins text-text-dark mb-4 mt-2">Schizophrenia Detection using EEG and Deep Learning</h2>
+                        </a>
+                        <p class="text-text-main mb-6 leading-relaxed">
+                            We are at the forefront of mental health diagnostics, utilizing cutting-edge technology to provide early and accurate detection of Schizophrenia. Our approach combines Electroencephalography (EEG) with advanced Deep Learning algorithms to analyze brainwave patterns, offering an objective, data-driven assessment.
+                        </p>
+                    </div>
+                    <div class="order-1 md:order-2 flex justify-center">
+                        <img src="https://placehold.co/600x450/daece4/2d5749?text=EEG+Deep+Learning" alt="EEG Deep Learning Analysis" class="rounded-2xl shadow-2xl w-full">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="appointment" class="bg-gray-50 py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold font-poppins text-text-dark mb-4">Book an Appointment</h2>
+                    <p class="text-text-main max-w-2xl mx-auto">Fill out the form below to schedule a visit with one of our expert doctors. Our team will contact you shortly to confirm your booking.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-2xl">
+                    <form action="https://www.bestdoctors.com/pune-branch/" method="POST" target="_blank">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label for="full-name" class="block text-sm font-bold text-text-dark mb-2">Patient's Full Name</label><input type="text" name="full-name" id="full-name" placeholder="John Doe" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main" required></div>
+                            <div><label for="age" class="block text-sm font-bold text-text-dark mb-2">Age</label><input type="number" name="age" id="age" placeholder="35" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main" required></div>
+                            <div><label for="gender" class="block text-sm font-bold text-text-dark mb-2">Gender</label><select id="gender" name="gender" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main" required><option>Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+                            <div><label for="contact-number" class="block text-sm font-bold text-text-dark mb-2">Contact Number</label><input type="tel" name="contact-number" id="contact-number" placeholder="987-654-3210" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main" required></div>
+                            <div><label for="appointment-date" class="block text-sm font-bold text-text-dark mb-2">Preferred Appointment Date</label><input type="date" name="appointment-date" id="appointment-date" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main" required></div>
+                            <div><label for="department" class="block text-sm font-bold text-text-dark mb-2">Department</label><select id="department" name="department" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main" required><option>Select Department</option><option>Cardiology</option><option>Neurology</option><option>Pediatrics</option><option>Orthopedics</option><option>General Checkup</option></select></div>
+                            <div class="md:col-span-2"><label for="reason" class="block text-sm font-bold text-text-dark mb-2">Reason For Visit / Symptoms</label><textarea name="reason" id="reason" rows="4" placeholder="Briefly describe your symptoms..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-main"></textarea></div>
+                        </div>
+                        <div class="text-center mt-8">
+                            <button type="submit" class="bg-main text-white font-bold py-3 px-10 rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-xl text-lg w-full md:w-auto">Request Appointment</button>
+                        </div>
+                         <p class="text-center text-xs text-gray-500 mt-4">*Upon submission, you will be redirected to the doctor's official page.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-text-dark text-secondary/70 py-16">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-2 lg:col-span-1"><h4 class="font-bold text-white mb-4 text-lg">Contact Us</h4><ul class="space-y-3"><li class="flex items-center space-x-3"><span>123 Health St, Wellness City, Pune, Maharashtra</span></li><li class="flex items-center space-x-3"><span>123-456-7890</span></li><li class="flex items-center space-x-3"><span>contact@healthcare.com</span></li></ul></div>
+            <div><h4 class="font-bold text-white mb-4 text-lg">Quick Links</h4><ul class="space-y-3"><li><a href="#about" class="hover:text-white transition-colors">About Us</a></li><li><a href="#services" class="hover:text-white transition-colors">Services</a></li><li><a href="#doctors" class="hover:text-white transition-colors">Doctors</a></li></ul></div>
+            <div><h4 class="font-bold text-white mb-4 text-lg">Follow Us</h4><div class="flex space-x-4"><a href="#" class="bg-main/20 text-white p-2 rounded-full hover:bg-main transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" /></svg></a><a href="#" class="bg-main/20 text-white p-2 rounded-full hover:bg-main transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.223.085a4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" /></svg></a></div></div>
+            <div class="md:col-span-4 lg:col-span-1"><h4 class="font-bold text-white mb-4 text-lg">Newsletter</h4><p class="mb-4">Stay updated with our latest news.</p><div class="flex"><input type="email" placeholder="Your Email" class="w-full rounded-l-md px-3 py-2 text-gray-800 outline-none"><button class="bg-main text-white px-4 rounded-r-md hover:bg-opacity-90">Go</button></div></div>
+        </div>
+        <div class="text-center mt-12 border-t border-white/10 pt-8">
+            <p>&copy; 2025 Healthcare. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div id="portal-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full relative">
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <span class="text-main font-semibold">YOUR HEALTH, SIMPLIFIED</span>
+            <h2 class="text-3xl font-bold font-poppins text-text-dark mb-4 mt-2">Create a Profile or Continue as Guest</h2>
+            <p class="text-text-main mb-8">By creating a free profile, you can manage your health journey with ease. Or, you can continue to book as a guest.</p>
+            <ul class="space-y-4 mb-8">
+                <li class="flex items-start"><div class="flex-shrink-0 bg-secondary text-main p-2 rounded-full mr-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg></div><div><h3 class="font-bold text-text-dark">Manage Appointments</h3><p class="text-text-main text-sm">Easily view upcoming appointments, schedule new ones, and access your visit history.</p></div></li>
+                <li class="flex items-start"><div class="flex-shrink-0 bg-secondary text-main p-2 rounded-full mr-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h2a2 2 0 002-2V4a2 2 0 00-2-2H9z" /><path d="M4 12a2 2 0 012-2h10a2 2 0 012 2v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z" /></svg></div><div><h3 class="font-bold text-text-dark">Access Medical Records</h3><p class="text-text-main text-sm">Securely view your lab results, prescriptions, and important health documents online.</p></div></li>
+            </ul>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button id="modal-continue-btn" class="w-full bg-main text-white font-bold py-3 px-6 rounded-full hover:bg-opacity-90 transition-all duration-300 shadow-lg">Continue to Booking</button>
+                <a href="login.html" class="w-full text-center bg-gray-200 text-text-dark font-bold py-3 px-6 rounded-full hover:bg-gray-300 transition-all duration-300">Login to Portal</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Patient Portal Modal Logic ---
+        const portalModal = document.getElementById('portal-modal');
+        const openModalButtons = document.querySelectorAll('.js-open-modal');
+        const closeModalButton = document.getElementById('modal-close-btn');
+        const continueBookingButton = document.getElementById('modal-continue-btn');
+        const appointmentSection = document.getElementById('appointment');
+        const openModal = () => portalModal.classList.remove('hidden');
+        const closeModal = () => portalModal.classList.add('hidden');
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                openModal();
+            });
+        });
+        closeModalButton.addEventListener('click', closeModal);
+        continueBookingButton.addEventListener('click', () => {
+            closeModal();
+            appointmentSection.scrollIntoView({ behavior: 'smooth' });
+        });
+        portalModal.addEventListener('click', (event) => {
+            if (event.target === portalModal) closeModal();
+        });
+        
+        // --- Doctors Slider Logic ---
+        const track = document.getElementById('slider-track');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentIndex = 0;
+        
+        function updateSlider() {
+            const slides = Array.from(track.children);
+            const totalSlides = slides.length;
+            let slidesInView = 1;
+            if (window.innerWidth >= 1024) { slidesInView = 3; } 
+            else if (window.innerWidth >= 768) { slidesInView = 2; }
+            
+            const maxIndex = totalSlides - slidesInView;
+            if (currentIndex > maxIndex) currentIndex = maxIndex;
+            if (currentIndex < 0) currentIndex = 0;
+
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === maxIndex;
+            prevBtn.classList.toggle('opacity-50', currentIndex === 0);
+            nextBtn.classList.toggle('opacity-50', currentIndex === maxIndex);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex++;
+            updateSlider();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex--;
+            updateSlider();
+        })
+        
+        window.addEventListener('resize', updateSlider);
+        document.addEventListener('DOMContentLoaded', updateSlider);
+
+    </script>
+
+</body>
+</html>

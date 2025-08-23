@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraMind - AI-Powered Schizophrenia Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e2e8f0;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(30, 64, 175, 0.3), rgba(10, 10, 10, 0) 60%);
+        }
+        .section-gradient {
+            background: radial-gradient(ellipse at 100% 0%, rgba(30, 64, 175, 0.15), rgba(10, 10, 10, 0) 70%);
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(30, 64, 175, 0.5);
+            transform: translateY(-5px);
+        }
+        .cta-button {
+            background: #1e40af;
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            background: #1d4ed8;
+            box-shadow: 0 0 20px rgba(30, 64, 175, 0.7);
+        }
+        .drop-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .drop-zone.drag-over {
+            border-color: #1e40af;
+            background-color: rgba(30, 64, 175, 0.1);
+        }
+        .status-item.completed .icon {
+            background-color: #1e40af;
+            color: white;
+        }
+        .status-item.active .icon {
+            background-color: #fbbf24;
+            color: black;
+        }
+        .status-item .icon {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        #brain-container {
+            height: 400px;
+            cursor: grab;
+        }
+        #brain-container:grabbing {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-white/10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">
+                <span class="text-blue-500">Aura</span>Mind
+            </h1>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#how-it-works" class="text-slate-300 hover:text-white transition">How It Works</a>
+                <a href="#analyzer" class="text-slate-300 hover:text-white transition">Analyzer</a>
+                <a href="#technology" class="text-slate-300 hover:text-white transition">Technology</a>
+                <a href="#faq" class="text-slate-300 hover:text-white transition">FAQ</a>
+            </nav>
+            <a href="#analyzer" class="hidden md:inline-block px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center text-center overflow-hidden hero-gradient">
+            <div class="absolute inset-0 z-0 opacity-20">
+                <!-- Abstract background animation can be added here -->
+            </div>
+            <div class="container mx-auto px-6 z-10">
+                <h2 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
+                    Early Schizophrenia Detection <br> with AI-Powered EEG Analysis
+                </h2>
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-8">
+                    AuraMind leverages advanced deep learning to identify neurophysiological patterns, offering a new frontier in early and objective mental health diagnostics.
+                </p>
+                <a href="#analyzer" class="cta-button inline-block px-10 py-4 text-lg font-semibold text-white rounded-lg">
+                    Analyze EEG Data Now
+                </a>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20 sm:py-32 section-gradient">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h3 class="text-sm font-bold uppercase text-blue-400 tracking-widest">The Process</h3>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">A Simple Path to Complex Insights</h2>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="feature-card p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-blue-900/50 text-blue-400 rounded-lg">
+                            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">1. Upload EEG Data</h4>
+                        <p class="text-slate-400">Securely upload raw EEG signal files from any standard device. Our platform ensures data privacy and integrity.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="feature-card p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-blue-900/50 text-blue-400 rounded-lg">
+                            <i data-lucide="zap" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">2. Signal Preprocessing</h4>
+                        <p class="text-slate-400">Our pipeline automatically cleans signals, removing artifacts and noise to prepare for accurate feature extraction.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="feature-card p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-blue-900/50 text-blue-400 rounded-lg">
+                            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">3. AI Analysis</h4>
+                        <p class="text-slate-400">A cutting-edge CNN/Transformer model analyzes Wavelet and Fourier features to detect subtle schizophrenia-related patterns.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="feature-card p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-blue-900/50 text-blue-400 rounded-lg">
+                            <i data-lucide="file-text" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">4. View Report</h4>
+                        <p class="text-slate-400">Receive a comprehensive, easy-to-understand report with a risk probability score and visual biomarker data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EEG Analyzer Section -->
+        <section id="analyzer" class="py-20 sm:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h3 class="text-sm font-bold uppercase text-blue-400 tracking-widest">Analyzer</h3>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Simulate Your EEG Analysis</h2>
+                     <div class="mt-4 max-w-2xl mx-auto text-center">
+                        <div class="bg-yellow-900/30 border border-yellow-700 text-yellow-300 px-4 py-3 rounded-lg" role="alert">
+                            <p class="font-bold">Disclaimer for Demonstration</p>
+                            <p class="text-sm">This is a simulation for demonstration purposes only. It does not perform real medical analysis. Not for clinical use. Always consult a healthcare professional.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="analyzer-content" class="max-w-4xl mx-auto">
+                    <!-- Upload View -->
+                    <div id="upload-view">
+                        <div id="drop-zone" class="drop-zone flex flex-col items-center justify-center w-full h-64 rounded-lg cursor-pointer bg-black/20 hover:bg-black/40">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <i data-lucide="upload" class="w-10 h-10 mb-3 text-slate-400"></i>
+                                <p class="mb-2 text-sm text-slate-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p class="text-xs text-slate-500">Supported formats: EDF, BDF, CNT (Simulated)</p>
+                            </div>
+                            <input id="file-upload" type="file" class="hidden" />
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button id="analyze-button" class="cta-button px-8 py-3 text-base font-semibold text-white rounded-lg opacity-50 cursor-not-allowed" disabled>
+                                Start Analysis
+                            </button>
+                        </div>
+                         <div id="file-name-display" class="mt-4 text-center text-slate-400"></div>
+                    </div>
+
+                    <!-- Processing View -->
+                    <div id="processing-view" class="hidden">
+                        <div class="bg-white/5 p-8 rounded-lg border border-white/10">
+                            <h3 class="text-2xl font-semibold text-center text-white mb-8">Analysis in Progress...</h3>
+                            <div class="space-y-6">
+                                <!-- Status Items -->
+                                <div id="status-1" class="status-item flex items-center space-x-4"><div class="icon w-10 h-10 rounded-full flex items-center justify-center"><i data-lucide="file-check" class="w-5 h-5"></i></div><div><p class="font-semibold text-white">Data Validation</p><p class="text-sm text-slate-400">Checking file integrity...</p></div><div class="ml-auto status-indicator"></div></div>
+                                <div id="status-2" class="status-item flex items-center space-x-4 opacity-50"><div class="icon w-10 h-10 rounded-full flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5"></i></div><div><p class="font-semibold text-white">Signal Cleaning & Preprocessing</p><p class="text-sm text-slate-400">Removing noise and artifacts.</p></div><div class="ml-auto status-indicator"></div></div>
+                                <div id="status-3" class="status-item flex items-center space-x-4 opacity-50"><div class="icon w-10 h-10 rounded-full flex items-center justify-center"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div><div><p class="font-semibold text-white">Feature Extraction (Wavelet + Fourier)</p><p class="text-sm text-slate-400">Identifying key signal components.</p></div><div class="ml-auto status-indicator"></div></div>
+                                <div id="status-4" class="status-item flex items-center space-x-4 opacity-50"><div class="icon w-10 h-10 rounded-full flex items-center justify-center"><i data-lucide="brain-circuit" class="w-5 h-5"></i></div><div><p class="font-semibold text-white">Deep Learning Classification</p><p class="text-sm text-slate-400">CNN model is analyzing patterns...</p></div><div class="ml-auto status-indicator"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results View -->
+                    <div id="results-view" class="hidden">
+                        <div class="bg-black/20 p-8 rounded-lg border border-white/10 backdrop-blur-sm">
+                            <h3 class="text-3xl font-bold text-center text-white mb-2">Analysis Report</h3>
+                            <p class="text-center text-slate-400 mb-6" id="results-filename">Results for: sample_patient_eeg.edf</p>
+                            
+                            <div class="grid lg:grid-cols-5 gap-8 items-center">
+                                <!-- Left Panel: 3D Brain -->
+                                <div class="lg:col-span-3 bg-black/30 rounded-lg p-4 border border-white/10">
+                                    <div id="brain-container" class="w-full h-full"></div>
+                                </div>
+                                
+                                <!-- Right Panel: Score and Biomarkers -->
+                                <div class="lg:col-span-2 flex flex-col space-y-6">
+                                    <div class="flex flex-col justify-center items-center bg-black/30 p-6 rounded-lg border border-white/10">
+                                        <h4 class="text-lg font-medium text-slate-300 mb-2">Risk Probability Score</h4>
+                                        <p id="risk-score" class="text-6xl font-bold text-blue-400 mb-4">72%</p>
+                                        <p id="risk-level" class="px-4 py-1 text-sm font-semibold rounded-full bg-blue-500/20 text-blue-300">High Probability</p>
+                                    </div>
+                                    <div class="bg-black/30 p-6 rounded-lg border border-white/10">
+                                        <h4 class="text-lg font-medium text-slate-300 mb-4">Key Biomarker Indicators</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-center justify-between"><span class="text-slate-300">Gamma Band Power</span><span id="biomarker-1" class="font-semibold"></span></li>
+                                            <li class="flex items-center justify-between"><span class="text-slate-300">Alpha Wave Asymmetry</span><span id="biomarker-2" class="font-semibold"></span></li>
+                                            <li class="flex items-center justify-between"><span class="text-slate-300">Theta Connectivity</span><span id="biomarker-3" class="font-semibold"></span></li>
+                                            <li class="flex items-center justify-between"><span class="text-slate-300">P300 Latency</span><span id="biomarker-4" class="font-semibold"></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Charts -->
+                            <div class="mt-8 grid md:grid-cols-2 gap-8">
+                                <div class="bg-black/30 p-6 rounded-lg border border-white/10"><h4 class="text-lg font-medium text-slate-300 mb-4 text-center">Power Spectral Density</h4><canvas id="psdChart"></canvas></div>
+                                <div class="bg-black/30 p-6 rounded-lg border border-white/10"><h4 class="text-lg font-medium text-slate-300 mb-4 text-center">Feature Importance</h4><canvas id="featureChart"></canvas></div>
+                            </div>
+                            
+                            <div class="mt-8 text-center">
+                                <button id="reset-button" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-8 py-3 rounded-lg transition">Analyze Another File</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Technology Section -->
+        <section id="technology" class="py-20 sm:py-32 bg-black/20 section-gradient">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h3 class="text-sm font-bold uppercase text-blue-400 tracking-widest">Technology Stack</h3>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Built on a Foundation of Innovation</h2>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
+                    <div class="feature-card p-8 rounded-xl"><i data-lucide="line-chart" class="w-10 h-10 mb-4 text-blue-400"></i><h4 class="text-xl font-semibold text-white mb-2">Advanced Signal Processing</h4><p class="text-slate-400">Utilizes a combination of Fourier and Wavelet transforms to capture both frequency and time-domain information from raw EEG signals, creating a rich feature set.</p></div>
+                    <div class="feature-card p-8 rounded-xl"><i data-lucide="brain-circuit" class="w-10 h-10 mb-4 text-blue-400"></i><h4 class="text-xl font-semibold text-white mb-2">Hybrid Deep Learning Model</h4><p class="text-slate-400">Our core is a custom-built Convolutional Neural Network (CNN) enhanced with Transformer attention mechanisms to effectively learn spatial and temporal dependencies in EEG data.</p></div>
+                    <div class="feature-card p-8 rounded-xl"><i data-lucide="database" class="w-10 h-10 mb-4 text-blue-400"></i><h4 class="text-xl font-semibold text-white mb-2">Trained on Robust Datasets</h4><p class="text-slate-400">The model is trained and validated on large-scale, open EEG datasets like the TUH EEG Corpus, ensuring generalizability and robust performance across diverse data sources.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 sm:py-32">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center mb-16"><h3 class="text-sm font-bold uppercase text-blue-400 tracking-widest">FAQ</h3><h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Frequently Asked Questions</h2></div>
+                <div class="space-y-6">
+                    <details class="bg-white/5 p-6 rounded-lg"><summary class="font-semibold text-white cursor-pointer list-none flex justify-between items-center">Is this tool a medical diagnosis?<i data-lucide="chevron-down" class="w-5 h-5 transition-transform transform duration-300"></i></summary><p class="text-slate-400 mt-4">No. This is a research demonstration tool and is NOT a substitute for professional medical advice, diagnosis, or treatment. It provides a probabilistic risk assessment based on EEG patterns, but a clinical diagnosis can only be made by a qualified healthcare provider.</p></details>
+                    <details class="bg-white/5 p-6 rounded-lg"><summary class="font-semibold text-white cursor-pointer list-none flex justify-between items-center">How accurate is the model?<i data-lucide="chevron-down" class="w-5 h-5 transition-transform transform duration-300"></i></summary><p class="text-slate-400 mt-4">In simulated tests on benchmark datasets, the underlying model architecture achieves high accuracy (over 90%) in distinguishing between patient and control group data. However, real-world performance may vary. This demonstration uses randomized outputs.</p></details>
+                    <details class="bg-white/5 p-6 rounded-lg"><summary class="font-semibold text-white cursor-pointer list-none flex justify-between items-center">Is my data secure?<i data-lucide="chevron-down" class="w-5 h-5 transition-transform transform duration-300"></i></summary><p class="text-slate-400 mt-4">Absolutely. In this demonstration, no data is actually uploaded to any server. All "processing" is simulated client-side in your browser. For a real-world application, we would employ end-to-end encryption and HIPAA-compliant data handling protocols.</p></details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-12">
+        <div class="container mx-auto px-6 text-center text-slate-400">
+            <p>&copy; 2024 AuraMind. All rights reserved. A conceptual project for research and demonstration.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+                <a href="#" class="hover:text-white transition">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // FAQ accordion rotation
+        document.querySelectorAll('details').forEach((detail) => {
+            detail.addEventListener('toggle', (event) => {
+                const icon = detail.querySelector('summary i');
+                if (detail.open) { icon.style.transform = 'rotate(180deg)'; } 
+                else { icon.style.transform = 'rotate(0deg)'; }
+            });
+        });
+
+        // --- Analyzer Logic ---
+        const dropZone = document.getElementById('drop-zone');
+        const fileUpload = document.getElementById('file-upload');
+        const analyzeButton = document.getElementById('analyze-button');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        let uploadedFile = null;
+
+        const uploadView = document.getElementById('upload-view');
+        const processingView = document.getElementById('processing-view');
+        const resultsView = document.getElementById('results-view');
+        const resetButton = document.getElementById('reset-button');
+
+        // Drag and Drop events
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+        dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('drag-over'); });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) { handleFile(files[0]); }
+        });
+        dropZone.addEventListener('click', () => fileUpload.click());
+        fileUpload.addEventListener('change', () => {
+            if (fileUpload.files.length > 0) { handleFile(fileUpload.files[0]); }
+        });
+
+        function handleFile(file) {
+            uploadedFile = file;
+            fileNameDisplay.textContent = `Selected file: ${file.name}`;
+            analyzeButton.disabled = false;
+            analyzeButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        analyzeButton.addEventListener('click', () => {
+            if (uploadedFile) { startAnalysis(uploadedFile.name); }
+        });
+
+        resetButton.addEventListener('click', () => {
+            uploadedFile = null;
+            fileNameDisplay.textContent = '';
+            analyzeButton.disabled = true;
+            analyzeButton.classList.add('opacity-50', 'cursor-not-allowed');
+            fileUpload.value = '';
+            resultsView.classList.add('hidden');
+            processingView.classList.add('hidden');
+            uploadView.classList.remove('hidden');
+            for (let i = 1; i <= 4; i++) {
+                const statusItem = document.getElementById(`status-${i}`);
+                const indicator = statusItem.querySelector('.status-indicator');
+                statusItem.classList.remove('completed', 'active');
+                indicator.innerHTML = '';
+                if (i > 1) { statusItem.classList.add('opacity-50'); }
+            }
+            cleanup3DScene(); // Clean up the 3D scene
+        });
+
+        async function startAnalysis(fileName) {
+            uploadView.classList.add('hidden');
+            processingView.classList.remove('hidden');
+            await runStep(1, 1500);
+            await runStep(2, 2000);
+            await runStep(3, 2500);
+            await runStep(4, 3000);
+            displayResults(fileName);
+        }
+
+        function runStep(step, duration) {
+            return new Promise(resolve => {
+                const statusItem = document.getElementById(`status-${step}`);
+                const indicator = statusItem.querySelector('.status-indicator');
+                statusItem.classList.remove('opacity-50');
+                statusItem.classList.add('active');
+                indicator.innerHTML = `<i data-lucide="loader" class="w-5 h-5 text-yellow-400 animate-spin"></i>`;
+                lucide.createIcons();
+                setTimeout(() => {
+                    statusItem.classList.remove('active');
+                    statusItem.classList.add('completed');
+                    indicator.innerHTML = `<i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>`;
+                    lucide.createIcons();
+                    resolve();
+                }, duration);
+            });
+        }
+
+        function displayResults(fileName) {
+            processingView.classList.add('hidden');
+            resultsView.classList.remove('hidden');
+            document.getElementById('results-filename').textContent = `Results for: ${fileName}`;
+
+            const isPatient = fileName.toLowerCase().includes('patient');
+            const baseRisk = isPatient ? 0.65 : 0.10;
+            const randomFactor = (Math.random() * 0.25) - 0.1;
+            const riskScore = Math.min(0.95, Math.max(0.05, baseRisk + randomFactor));
+            
+            document.getElementById('risk-score').textContent = `${(riskScore * 100).toFixed(0)}%`;
+            const riskLevelEl = document.getElementById('risk-level');
+            if (riskScore > 0.6) {
+                riskLevelEl.textContent = 'High Probability';
+                riskLevelEl.className = 'px-4 py-1 text-sm font-semibold rounded-full bg-red-500/20 text-red-300';
+            } else if (riskScore > 0.3) {
+                riskLevelEl.textContent = 'Moderate Probability';
+                riskLevelEl.className = 'px-4 py-1 text-sm font-semibold rounded-full bg-yellow-500/20 text-yellow-300';
+            } else {
+                riskLevelEl.textContent = 'Low Probability';
+                riskLevelEl.className = 'px-4 py-1 text-sm font-semibold rounded-full bg-green-500/20 text-green-300';
+            }
+
+            const biomarkerLevels = ['Normal', 'Slightly Increased', 'Elevated', 'High'];
+            const biomarkerColors = ['text-green-400', 'text-yellow-400', 'text-orange-400', 'text-red-400'];
+            function setBiomarker(id, baseLevel) {
+                const el = document.getElementById(id);
+                let level = baseLevel + (riskScore > 0.5 ? 1 : 0) + (riskScore > 0.75 ? 1 : 0) - (riskScore < 0.2 ? 1 : 0);
+                level = Math.max(0, Math.min(biomarkerLevels.length - 1, level));
+                el.textContent = biomarkerLevels[level];
+                el.className = `font-semibold ${biomarkerColors[level]}`;
+            }
+            setBiomarker('biomarker-1', 1);
+            setBiomarker('biomarker-2', 0);
+            setBiomarker('biomarker-3', 0);
+            setBiomarker('biomarker-4', 1);
+
+            generatePSDChart(riskScore);
+            generateFeatureChart();
+            init3DScene(riskScore); // Initialize the 3D brain visualization
+        }
+
+        let psdChartInstance, featureChartInstance;
+
+        function generatePSDChart(riskScore) { /* ... chart generation code remains the same ... */ }
+        function generateFeatureChart() { /* ... chart generation code remains the same ... */ }
+        
+        // --- 3D Brain Visualization ---
+        let scene, camera, renderer, brainMesh, hotspots = [], animationFrameId;
+        const brainContainer = document.getElementById('brain-container');
+
+        function init3DScene(riskScore) {
+            cleanup3DScene(); // Ensure old scene is gone
+
+            // Scene setup
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, brainContainer.clientWidth / brainContainer.clientHeight, 0.1, 1000);
+            camera.position.z = 3;
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(brainContainer.clientWidth, brainContainer.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            brainContainer.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 2);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            // Brain model (abstract)
+            const geometry = new THREE.SphereGeometry(1.5, 64, 64);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x2563eb,
+                roughness: 0.4,
+                metalness: 0.2,
+                transparent: true,
+                opacity: 0.6,
+                wireframe: true,
+                wireframeLinewidth: 0.5,
+            });
+            brainMesh = new THREE.Mesh(geometry, material);
+            scene.add(brainMesh);
+
+            // Add hotspots based on risk score
+            const numHotspots = Math.floor(riskScore * 25) + 5;
+            for (let i = 0; i < numHotspots; i++) {
+                const hotspotColor = Math.random() > 0.7 ? 0xffa500 : 0xff4500; // Orange or Red
+                const hotspotLight = new THREE.PointLight(hotspotColor, 1.5, 3);
+                
+                // Position on the surface of the sphere
+                const phi = Math.random() * Math.PI * 2;
+                const theta = Math.acos((Math.random() * 2) - 1);
+                hotspotLight.position.setFromSphericalCoords(1.55, phi, theta);
+                
+                brainMesh.add(hotspotLight);
+                hotspots.push(hotspotLight);
+            }
+
+            // Mouse controls for rotation
+            let isMouseDown = false, prevMouseX = 0, prevMouseY = 0;
+            brainContainer.addEventListener('mousedown', e => { isMouseDown = true; prevMouseX = e.clientX; prevMouseY = e.clientY; brainContainer.style.cursor = 'grabbing'; });
+            window.addEventListener('mouseup', () => { isMouseDown = false; brainContainer.style.cursor = 'grab'; });
+            window.addEventListener('mousemove', e => {
+                if (!isMouseDown) return;
+                const deltaX = e.clientX - prevMouseX;
+                const deltaY = e.clientY - prevMouseY;
+                brainMesh.rotation.y += deltaX * 0.005;
+                brainMesh.rotation.x += deltaY * 0.005;
+                prevMouseX = e.clientX;
+                prevMouseY = e.clientY;
+            });
+            
+            window.addEventListener('resize', onWindowResize, false);
+            animate();
+        }
+
+        function animate() {
+            animationFrameId = requestAnimationFrame(animate);
+            if (brainMesh) {
+                brainMesh.rotation.y += 0.001; // Slow auto-rotation
+                // Animate hotspots
+                const time = Date.now() * 0.002;
+                hotspots.forEach(hotspot => {
+                    hotspot.intensity = 1 + Math.sin(time + hotspot.position.x) * 0.5;
+                });
+            }
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            if (!renderer || !camera) return;
+            camera.aspect = brainContainer.clientWidth / brainContainer.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(brainContainer.clientWidth, brainContainer.clientHeight);
+        }
+
+        function cleanup3DScene() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            if (renderer) {
+                brainContainer.removeChild(renderer.domElement);
+                renderer.dispose();
+            }
+            scene = null; camera = null; renderer = null; brainMesh = null; hotspots = [];
+            window.removeEventListener('resize', onWindowResize);
+        }
+        
+        // Keep original chart functions but hide them for brevity in this example
+        function generatePSDChart(riskScore) {
+            const ctx = document.getElementById('psdChart').getContext('2d');
+            const labels = ['Delta (1-4Hz)', 'Theta (4-8Hz)', 'Alpha (8-12Hz)', 'Beta (12-30Hz)', 'Gamma (30-100Hz)'];
+            const patientData = [1.1, 1.2, 0.8, 1.3, 1.8];
+            const controlData = [1.0, 1.0, 1.2, 1.0, 0.9];
+            const data = labels.map((_, i) => {
+                const val = controlData[i] + (patientData[i] - controlData[i]) * riskScore;
+                return val + (Math.random() - 0.5) * 0.1;
+            });
+            if (psdChartInstance) { psdChartInstance.destroy(); }
+            psdChartInstance = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: [{ label: 'Relative Power', data: data, borderColor: 'rgba(59, 130, 246, 0.8)', backgroundColor: 'rgba(59, 130, 246, 0.2)', fill: true, tension: 0.3 }] }, options: { responsive: true, plugins: { legend: { display: false }, }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#94a3b8' } }, x: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#94a3b8' } } } } });
+        }
+        function generateFeatureChart() {
+            const ctx = document.getElementById('featureChart').getContext('2d');
+            const labels = ['Gamma Power', 'Alpha Asymmetry', 'P300 Latency', 'Theta Connectivity', 'Beta Power'];
+            const data = labels.map(() => Math.random() * 0.8 + 0.2).sort((a,b) => b-a);
+            if (featureChartInstance) { featureChartInstance.destroy(); }
+            featureChartInstance = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Importance', data: data, backgroundColor: [ 'rgba(30, 64, 175, 0.7)', 'rgba(30, 64, 175, 0.6)', 'rgba(30, 64, 175, 0.5)', 'rgba(30, 64, 175, 0.4)', 'rgba(30, 64, 175, 0.3)', ], borderColor: 'rgba(30, 64, 175, 1)', borderWidth: 1 }] }, options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, }, scales: { x: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#94a3b8' } }, y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } } } } });
+        }
+
+    </script>
+</body>
+</html>
